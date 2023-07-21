@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "exel"
+version = "0.1.0"
+description = ""
+authors = ["my <jakha921@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+openpyxl = "^3.1.2"
+aiogram = "^2.25.1"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
