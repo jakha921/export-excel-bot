@@ -19,7 +19,6 @@ def insert_into_template(template_path, data_list, codes):
     for row_index, data in enumerate(data_list, start=4):
         # Insert product data
         product_data = data.get('products', [])
-        print('output_file_path')
         if product_data:
             for index, product in enumerate(product_data, start=0):
 

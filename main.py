@@ -41,8 +41,6 @@ async def handle_file(message: types.Message):
         # Call the custom function to process the data
         output_data = run()
 
-        print('output_data', output_data)
-
         # Send the processed file back to the user
         with open(output_data, 'rb') as output_file:
             await bot.send_document(message.chat.id, output_file, caption="Here's your processed file.")
