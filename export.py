@@ -80,13 +80,21 @@ def open_files():
 
     # parsed_data import from backet json file
 
+    # Get the current working directory
+    current_dir = os.getcwd()
+
+    # Construct the file paths using os.path.join to handle the correct path separator
+    parsed_file_path = os.path.join(current_dir, 'src', 'parsed_file.json')
+    product_codes_file_path = os.path.join(current_dir, 'src', 'product_codes.json')
+
+    # Load the parsed data from 'parsed_file.json'
     print('parsed_data')
-    with open('src\\parsed_file.json', 'r', encoding='utf-8') as json_file:
+    with open(parsed_file_path, 'r', encoding='utf-8') as json_file:
         parsed_data = json.load(json_file)
 
-    # codes import from product_codes json file
+    # Load the codes from 'product_codes.json'
     print('codes')
-    with open('src\\product_codes.json', 'r', encoding='utf-8') as json_file:
+    with open(product_codes_file_path, 'r', encoding='utf-8') as json_file:
         codes = json.load(json_file)
 
     return insert_into_template(template_path, parsed_data, codes)
