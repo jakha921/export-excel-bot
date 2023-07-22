@@ -14,9 +14,11 @@ def insert_into_template(template_path, data_list, codes):
     duplicated_rows = []
 
     # Starting from row 4, insert the parsed data into the template
+    print('data_list')
     for row_index, data in enumerate(data_list, start=4):
         # Insert product data
         product_data = data.get('products', [])
+        print('output_file_path')
         if product_data:
             for index, product in enumerate(product_data, start=0):
 
@@ -58,6 +60,7 @@ def insert_into_template(template_path, data_list, codes):
                 duplicated_rows.append(row)
 
     # Insert duplicated rows into the sheet
+    print('duplicated_rows')
     for row_index, row_data in enumerate(duplicated_rows,
                                          start=len(data_list) + 3):  # +3 to account for the header rows
         sheet.append(row_data)
@@ -77,11 +80,12 @@ def open_files():
 
     # parsed_data import from backet json file
 
-    #
+    print('parsed_data')
     with open('src/parsed_file.json', 'r', encoding='utf-8') as json_file:
         parsed_data = json.load(json_file)
 
     # codes import from product_codes json file
+    print('codes')
     with open('src/product_codes.json', 'r', encoding='utf-8') as json_file:
         codes = json.load(json_file)
 
