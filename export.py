@@ -1,3 +1,4 @@
+import os
 from datetime import datetime
 import json
 
@@ -81,12 +82,14 @@ def open_files():
     # parsed_data import from backet json file
 
     print('parsed_data')
-    with open('src/parsed_file.json', 'r', encoding='utf-8') as json_file:
+    parsed_data = os.path.join("src", "parsed_file.json")
+    with open(parsed_data, 'r', encoding='utf-8') as json_file:
         parsed_data = json.load(json_file)
 
     # codes import from product_codes json file
     print('codes')
-    with open('src/product_codes.json', 'r', encoding='utf-8') as json_file:
+    codes = os.path.join("src", "product_codes.json")
+    with open(codes, 'r', encoding='utf-8') as json_file:
         codes = json.load(json_file)
 
     return insert_into_template(template_path, parsed_data, codes)
