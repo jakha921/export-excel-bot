@@ -48,7 +48,7 @@ async def handle_file(message: types.Message):
             await bot.send_document(message.chat.id, output_file, caption="Here's your processed file.")
 
         # Delete the temporary files
-        os.remove("exeles\parsing_file.xlsx")
+        os.remove("exeles\\parsing_file.xlsx")
         os.remove("src\\parsed_file.json")
         os.remove(output_data)
 
