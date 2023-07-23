@@ -70,8 +70,12 @@ def insert_into_template(template_path, data_list, codes):
     # workbook.save(output_file_path)
     # print(f"Data has been inserted into '{output_file_path}'.")
 
+    # Create the 'ready' directory if it doesn't exist
+    ready_dir = 'ready'
+    os.makedirs(ready_dir, exist_ok=True)
+
     # Save the updated template to a new Excel file
-    output_file_path = os.path.join('ready', 'output.xlsx')
+    output_file_path = os.path.join(ready_dir, 'output.xlsx')
     workbook.save(output_file_path)
     print(f"Data has been inserted into '{output_file_path}'.")
 
