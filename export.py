@@ -81,8 +81,6 @@ def insert_into_template(template_path, data_list, codes):
 def open_files():
     # Replace 'template_path.xlsx' with the path to your template Excel file
     # Replace 'parsed_data' with the list of dictionaries containing the parsed data
-    template_path = 'exeles\Template.xlsx'
-
     # parsed_data import from backet json file
 
     # Get the current working directory
@@ -93,6 +91,8 @@ def open_files():
     # product_codes_file_path = os.path.join(current_dir, 'src', 'product_codes.json')
 
     # Construct the file paths using os.path.join
+    template_path = os.path.join(current_dir, 'exeles', 'Template.xlsx')
+
     parsed_file_path = os.path.join('src', 'parsed_file.json')
     product_codes_file_path = os.path.join('src', 'product_codes.json')
 
