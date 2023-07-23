@@ -66,7 +66,12 @@ def insert_into_template(template_path, data_list, codes):
         sheet.append(row_data)
 
     # Save the updated template to a new Excel file
-    output_file_path = 'ready\output.xlsx'
+    # output_file_path = 'ready\output.xlsx'
+    # workbook.save(output_file_path)
+    # print(f"Data has been inserted into '{output_file_path}'.")
+
+    # Save the updated template to a new Excel file
+    output_file_path = os.path.join('ready', 'output.xlsx')
     workbook.save(output_file_path)
     print(f"Data has been inserted into '{output_file_path}'.")
 
@@ -84,8 +89,12 @@ def open_files():
     current_dir = os.getcwd()
 
     # Construct the file paths using os.path.join to handle the correct path separator
-    parsed_file_path = os.path.join(current_dir, 'src', 'parsed_file.json')
-    product_codes_file_path = os.path.join(current_dir, 'src', 'product_codes.json')
+    # parsed_file_path = os.path.join(current_dir, 'src', 'parsed_file.json')
+    # product_codes_file_path = os.path.join(current_dir, 'src', 'product_codes.json')
+
+    # Construct the file paths using os.path.join
+    parsed_file_path = os.path.join('src', 'parsed_file.json')
+    product_codes_file_path = os.path.join('src', 'product_codes.json')
 
     # Load the parsed data from 'parsed_file.json'
     print('parsed_data')
