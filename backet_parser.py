@@ -57,17 +57,6 @@ def parse_backet():
     # Replace 'file_path.xlsx' with the path to your Excel file
     parsed_data = parse_invoice_data('exeles\parsing_file.xlsx')
 
-
-    # Replace 'output_file.json' with the desired path and filename for the JSON output
-    # output_file_path = 'src\\parsed_file.json'
-
-    # Save the parsed data to a JSON file
-    # with open(output_file_path, 'w', encoding='utf-8') as json_file:
-    #     json.dump(parsed_data, json_file, ensure_ascii=False, indent=4)
-    #
-    # print(f"Parsed data has been saved to '{output_file_path}'.")
-
-
     # Construct the output file path using os.path.join
     output_file_path = os.path.join('src', 'parsed_file.json')
 
