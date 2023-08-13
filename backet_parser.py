@@ -1,4 +1,5 @@
 import os
+from datetime import datetime
 
 import openpyxl
 import json
@@ -21,7 +22,20 @@ def parse_invoice_data(file_path):
         data['invoice_number'] = sheet['F1'].value
         data['sender'] = sheet['D4'].value
         data['passport'] = sheet['D7'].value
-        data['dob'] = str(sheet['D8'].value)
+        # data['dob'] = str(sheet['D8'].value)
+
+        # Extract and convert datetime data
+        try:
+            dob_datetime = sheet['D8'].value
+            if isinstance(dob_datetime, datetime):
+                dob_string = dob_datetime.strftime('%d.%m.%Y')
+            else:
+                dob_string = str(dob_datetime)
+            data['dob'] = dob_string
+        except Exception as e:
+            print('error dob', e)
+            raise f'error dob {e}'
+
         data['weight'] = sheet['H45'].value
         data['phone'] = sheet['D10'].value
 

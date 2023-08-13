@@ -1,5 +1,7 @@
 import os
-import aiogram
+from asyncio import sleep
+from random import random
+
 from aiogram import Bot, types
 from aiogram.dispatcher import Dispatcher
 from aiogram.utils import executor
@@ -28,8 +30,22 @@ async def handle_file(message: types.Message):
     try:
         # Get the file from the message
         file_id = message.document.file_id
+        file_size = message.document.file_size
+
+        # make long proccesing for big files for every 50 kilobytes of file size sleep 1 second and set to random range
+        if file_size / 1024 > 50:
+            # send message to user
+            await message.reply('File is in processing, please wait')
+
+            # get random range if file size more than 700 kilobytes
+            random_range = random() * 3 if file_size / 1024 > 700 else random() * 4
+            # get sleep time
+            sleep_time = file_size / 1024 / 50 * random_range
+            # sleep
+            print('sleep_time', sleep_time)
+            await sleep(sleep_time)
+
         file_path = await bot.get_file(file_id)
-        file_name = file_path.file_path.split('/')[-1]
 
         # Download the file
         file_to_process = await bot.download_file(file_path.file_path)
@@ -44,6 +60,7 @@ async def handle_file(message: types.Message):
         # Send the processed file back to the user
         with open(output_data, 'rb') as output_file:
             await bot.send_document(message.chat.id, output_file, caption="Here's your processed file.")
+        print('-' * 50)
 
         # Delete the temporary files
         os.remove("exeles\\parsing_file.xlsx")
