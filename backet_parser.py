@@ -1,4 +1,5 @@
 import os
+import warnings
 from datetime import datetime
 
 import openpyxl
@@ -6,6 +7,11 @@ import json
 
 
 def parse_invoice_data(file_path):
+
+    # Suppress the Data Validation warning
+    warnings.filterwarnings("ignore", category=UserWarning,
+                            message="Data Validation extension is not supported and will be removed")
+
     workbook = openpyxl.load_workbook(file_path)
     sheets = workbook.sheetnames
 

@@ -3,6 +3,7 @@ from datetime import datetime
 import json
 
 import openpyxl
+import re
 
 
 def insert_into_template(template_path, data_list, codes):
@@ -23,11 +24,15 @@ def insert_into_template(template_path, data_list, codes):
             for index, product in enumerate(product_data, start=0):
 
                 date_string = str(data['dob']).split()[0]
-                try:
-                    date_obj = datetime.strptime(date_string, "%Y-%m-%d")
-                except ValueError:
-                    raise ValueError(f"Incorrect data format, should be YYYY-MM-DD in invoice {data['invoice_number']}")
-                formatted_date = date_obj.strftime("%d.%m.%Y")
+
+                #     acepct date format 01.01.2021 or 01,01,2021
+                if re.match(r'\d{2}.\d{2}.\d{4}', date_string) or re.match(r'\d{2},\d{2},\d{4}', date_string):
+                    date_string_with_periods = date_string.replace(',', '.')
+                    date_obj = datetime.strptime(date_string_with_periods, "%d.%m.%Y")
+                    formatted_date = date_obj.strftime("%d.%m.%Y")
+                else:
+                    raise ValueError(
+                        f"Incorrect data format, should be 01.01.2021 or 01,01,2021 in invoice {data['invoice_number']}")
 
                 row = [
                     data['invoice_number'],
