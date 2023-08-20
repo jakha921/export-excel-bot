@@ -55,7 +55,7 @@ async def handle_file(message: types.Message):
             parsing_file.write(file_to_process.getvalue())
 
         # Call the custom function to process the data
-        output_data = run()
+        output_data, errors = run()
 
         # Send the processed file back to the user
         with open(output_data, 'rb') as output_file:
@@ -66,6 +66,9 @@ async def handle_file(message: types.Message):
         os.remove("exeles\\parsing_file.xlsx")
         os.remove("src\\parsed_file.json")
         os.remove(output_data)
+
+        if errors:
+            await message.reply('*Errors:*\n\n' + '\n'.join(errors), parse_mode='Markdown')
 
     except ValueError as e:
         await message.reply(e)

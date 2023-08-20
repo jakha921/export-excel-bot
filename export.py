@@ -9,71 +9,71 @@ import re
 def insert_into_template(template_path, data_list, codes):
     workbook = openpyxl.load_workbook(template_path)
     sheet = workbook.sheetnames[0]
-
     sheet = workbook[sheet]
 
     # Create a new list to store the duplicated rows
     duplicated_rows = []
 
+    # Create a list to collect error messages
+    error_messages = []
+
     # Starting from row 4, insert the parsed data into the template
-    print('data_list')
     for row_index, data in enumerate(data_list, start=4):
-        # Insert product data
-        product_data = data.get('products', [])
-        if product_data:
-            for index, product in enumerate(product_data, start=0):
+        try:
+            # Insert product data
+            product_data = data.get('products', [])
+            if product_data:
+                for index, product in enumerate(product_data, start=0):
 
-                date_string = str(data['dob']).split()[0]
+                    date_string = str(data['dob']).split()[0]
 
-                #     acepct date format 01.01.2021 or 01,01,2021
-                if re.match(r'\d{2}.\d{2}.\d{4}', date_string) or re.match(r'\d{2},\d{2},\d{4}', date_string):
-                    date_string_with_periods = date_string.replace(',', '.')
-                    date_obj = datetime.strptime(date_string_with_periods, "%d.%m.%Y")
-                    formatted_date = date_obj.strftime("%d.%m.%Y")
-                else:
-                    raise ValueError(
-                        f"Incorrect data format, should be 01.01.2021 or 01,01,2021 in invoice {data['invoice_number']}")
+                    # Accept date format 01.01.2021 or 01,01,2021
+                    if re.match(r'\d{2}.\d{2}.\d{4}', date_string) or re.match(r'\d{2},\d{2},\d{4}', date_string):
+                        date_string_with_periods = date_string.replace(',', '.')
+                        date_obj = datetime.strptime(date_string_with_periods, "%d.%m.%Y")
+                        formatted_date = date_obj.strftime("%d.%m.%Y")
+                    else:
+                        raise ValueError(
+                            f"Incorrect data format, should be 01.01.2021 or 01,01,2021 in invoice {data['invoice_number']}")
 
-                row = [
-                    data['invoice_number'],
-                    0,
-                    data['sender'],
-                    data['phone'],
-                    data['passport'],
-                    formatted_date,
-                    data['weight'],
-                    data['phone'],
-                    1,
-                    0,
-                    '',
-                    '',
-                    '796',
-                    product['product_quantity'],
-                    product['product_price'],
-                    '840',
-                    product['product_info'],
-                    ''
-                ]
+                    row = [
+                        data['invoice_number'],
+                        0,
+                        data['sender'],
+                        data['phone'],
+                        data['passport'],
+                        formatted_date,
+                        data['weight'],
+                        data['phone'],
+                        1,
+                        0,
+                        '',
+                        '',
+                        '796',
+                        product['product_quantity'],
+                        product['product_price'],
+                        '840',
+                        product['product_info'],
+                        ''
+                    ]
 
-                # Search code in codes list
-                for code in codes:
-                    if code['product'] == product['product_name'].lower().strip():
-                        row[10] = code['code']
-                        row[11] = code['kod']
-                        break
+                    # Search code in codes list
+                    for code in codes:
+                        if code['product'] == product['product_name'].lower().strip():
+                            row[10] = code['code']
+                            row[11] = code['kod']
+                            break
 
-                duplicated_rows.append(row)
+                    duplicated_rows.append(row)
+
+        except ValueError as e:
+            # Collect error messages
+            error_messages.append(f"Error in invoice {data['invoice_number']}: {str(e)}")
 
     # Insert duplicated rows into the sheet
-    print('duplicated_rows')
     for row_index, row_data in enumerate(duplicated_rows,
                                          start=len(data_list) + 3):  # +3 to account for the header rows
         sheet.append(row_data)
-
-    # Save the updated template to a new Excel file
-    # output_file_path = 'ready\output.xlsx'
-    # workbook.save(output_file_path)
-    # print(f"Data has been inserted into '{output_file_path}'.")
 
     # Create the 'ready' directory if it doesn't exist
     ready_dir = 'ready'
@@ -84,10 +84,11 @@ def insert_into_template(template_path, data_list, codes):
     workbook.save(output_file_path)
     print(f"Data has been inserted into '{output_file_path}'.")
 
-    return output_file_path
+    return output_file_path, error_messages
 
 
 def open_files():
+    print('open_files')
     # Replace 'template_path.xlsx' with the path to your template Excel file
     # Replace 'parsed_data' with the list of dictionaries containing the parsed data
     # parsed_data import from backet json file
