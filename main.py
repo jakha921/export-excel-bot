@@ -58,14 +58,15 @@ async def handle_file(message: types.Message):
         output_data, errors = run()
 
         # Send the processed file back to the user
-        with open(output_data, 'rb') as output_file:
-            await bot.send_document(message.chat.id, output_file, caption="Here's your processed file.")
-        print('-' * 50)
+        if output_data:
+            with open(output_data, 'rb') as output_file:
+                await bot.send_document(message.chat.id, output_file, caption="Here's your processed file.")
+            print('-' * 50)
 
-        # Delete the temporary files
-        os.remove("exeles\\parsing_file.xlsx")
-        os.remove("src\\parsed_file.json")
-        os.remove(output_data)
+            # Delete the temporary files
+            os.remove("exeles\\parsing_file.xlsx")
+            os.remove("src\\parsed_file.json")
+            os.remove(output_data)
 
         if errors:
             await message.reply('*Errors:*\n\n' + '\n'.join(errors), parse_mode='Markdown')
