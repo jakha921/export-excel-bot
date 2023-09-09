@@ -71,6 +71,7 @@ async def handle_file(message: types.Message):
         if errors:
             await message.reply('*Errors:*\n\n' + '\n'.join(errors), parse_mode='Markdown')
 
+
     except ValueError as e:
         await message.reply(e)
 
