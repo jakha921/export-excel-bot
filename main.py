@@ -64,8 +64,10 @@ async def handle_file(message: types.Message):
             print('-' * 50)
 
             # Delete the temporary files
-            os.remove(os.path.join('exeles', 'parsing_file.xlsx'))
-            os.remove(os.path.join('src', 'parsed_file.json'))
+            if os.path.exists(os.path.join('exeles', 'parsing_file.xlsx')):
+                os.remove(os.path.join('exeles', 'parsing_file.xlsx'))
+            if os.path.exists(os.path.join('src', 'parsed_file.json')):
+                os.remove(os.path.join('src', 'parsed_file.json'))
             os.remove(output_data)
 
         if errors:
