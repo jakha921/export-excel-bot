@@ -10,7 +10,7 @@ from aiogram.contrib.middlewares.logging import LoggingMiddleware
 from runner import run
 
 # Replace 'YOUR_BOT_TOKEN' with your actual bot token obtained from BotFather
-TOKEN = '6016263556:AAEZEx5ph26fKO7VyYfNssNH0Po5wV5lNjA'
+TOKEN = '6422139965:AAGbZY7F37TCN88dhK_UxIQp2U206omIUWc'
 
 # Initialize the bot and dispatcher
 bot = Bot(token=TOKEN)
